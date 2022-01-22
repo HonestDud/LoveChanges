@@ -1,7 +1,6 @@
 # LoveChanges
 
 import praw
-from PyDictionary import PyDictionary
 import enchant
 
 # create the objects from the imported modules
@@ -11,39 +10,28 @@ reddit = praw.Reddit(client_id='Fill',
                      client_secret='fill',
                      username='LoveChangesbotv1',
                      password='iamwordbotforlove',
-                     user_agent='wordbot by /u/jfishersolutions')
+                     user_agent='xxx')
                     
-# dictionary and word check
-dictionary = PyDictionary()
-d = enchant.Dict("en_US")
-
-# check if the word is real
-def isWord(word):
-    return d.check(word)
 
 # the subreddits you want your bot to live on
-subreddit = reddit.subreddit('words')
+subreddit = reddit.subreddit('xxxx')
 
 # phrase to activate the bot
-keyphrase = '!wordbot '
+keyphrase = 'depression, suicide, self harm, self-harm, selfharm  '
 
 # look for phrase and reply appropriately
 for comment in subreddit.stream.comments():
     if keyphrase in comment.body:
         word = comment.body.replace(keyphrase, '')
         try:
-            if isWord(word):
-                # get meaning as object, get the index of a sentence and reply it
-                words = dictionary.meaning(word)
-                reply = [item[0] for item in words.values()]
-                comment.reply(word + ': '  + reply[0])
-                print('posted')
+            if 
+            
             else:
-                reply = 'This is not a word.'
+                reply = 'You are loved.You deserve the best life has to offer you!'
                 comment.reply(reply)
                 print('posted')
         except:
-            print('to frequent')
+            print('too frequent')
             
             
         
