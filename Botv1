@@ -2,29 +2,39 @@
 
 import praw
 import enchant
+from supabase_py import create_client, Client
 
 # create the objects from the imported modules
+
 
 # reddit api login
 reddit = praw.Reddit(client_id='Fill',
                      client_secret='fill',
                      username='LoveChangesbotv1',
                      password='iamwordbotforlove',
-                     user_agent='xxx')
-                    
+                     user_agent='xxx')                   
+         
+  # Supabase client for database interaction       
+ url: str = os.environ.get("SUPABASE_URL")
+ key: str = os.environ.get("SUPABASE_KEY")
+ supabase: Client = create_client(url, key)
+
+   # Storage and ID of Organization for comments
+comments = supabase.table("comment_ids").select("*").execute()
+  comments_already_responded_to = [comment['id'] for comment in comments.get("data", [])]
 
 # the subreddits you want your bot to live on
 subreddit = reddit.subreddit('xxxx')
 
 # phrase to activate the bot
-keyphrase = 'depression, suicide, self harm, self-harm, selfharm  '
+keyphrase = 'depression, suicide, self harm, self-harm, selfharm, anxiety, anxious, overloaded, overload, I want to die, I can't wait to die, why can't I die, why aren't I dead,
+why do I have to be alive, what is the point of being alive, why did this happen to me, I wish I was dead, I wish I was never born,  '
 
-# look for phrase and reply appropriately
+# look for phrase and reply appropriately/Ensures no repeating comments through supabase 
 for comment in subreddit.stream.comments():
-    if keyphrase in comment.body:
-        word = comment.body.replace(keyphrase, '')
-        try:
-            if 
+    if keyphrase in comment.body.lower() and comment.id not in comments_already_responded_to:
+       comment.reply ( List with corresponsing keyphrase chosen response at random )
+       data = supabase.table("comment_ids").insert({"id":comment.id, "comment.body}).execute()
             
             else:
                 reply = 'You are loved.You deserve the best life has to offer you!'
@@ -33,6 +43,6 @@ for comment in subreddit.stream.comments():
         except:
             print('too frequent')
             
-            
+             
         
         
