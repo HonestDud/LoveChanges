@@ -36,10 +36,6 @@ comments = supabase.table("comment_ids").select("*").execute()
 # the subreddits you want your bot to live on
 subreddit = reddit.subreddit('xxxx')
 
-# phrase to activate the bot ( Will remove for better code
-keyphrase = 'depression, suicide, self harm, self-harm, selfharm, anxiety, anxious, overloaded, overload, I want to die, I can't wait to die, why can't I die, why aren't I dead,
-why do I have to be alive, what is the point of being alive, why did this happen to me, I wish I was dead, I wish I was never born,  '
-
 # look for phrase and reply appropriately/Ensures no repeating comments through supabase 
 for comment in subreddit.stream.comments():
     if keyphrase in comment.body.lower() and comment.id not in comments_already_responded_to:
@@ -53,15 +49,14 @@ for comment in subreddit.stream.comments():
         except:
             print('too frequent')
 
-   #End code here)
 
 
   class Redditbot:
-    def __init__(self, filename):
-      self.response_list = []
+    def __init__(self, ResponseL.xlsx):
+      self.response_list = [ResponseL.xlsx]
 
       if len(db) == 0:
-        with open(filename) as csv_file: 
+        with open(ResponseL.xlsx) as csv_file: 
           csv_reader = csv.reader(csv_file, delimiter=",")
           for row in csv_reader:
             self.response_list.append({
